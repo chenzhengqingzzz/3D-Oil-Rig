@@ -4,6 +4,7 @@ import {
     Route,
 } from "react-router-dom";
 import  LandRIGSHOW  from "../pages/landRIG";
+import OceanRIGSHOW from "../pages/OceanRIG";
 
 const Root = () => {
     return (
@@ -12,6 +13,7 @@ const Root = () => {
                 <Routes>
                     <Route path="/">
                         <Route path="LandRIGSHOW" element={<LandRIGSHOW />} />
+                        <Route path="OceanRIGSHOW" element={<OceanRIGSHOW />} />
                    </Route>
                 </Routes>
             </BrowserRouter>
