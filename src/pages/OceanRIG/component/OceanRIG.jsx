@@ -4,7 +4,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 export function OceanRIG(props) {
   const group = useRef();
   const { nodes, materials, animations } = useGLTF("/海上钻井平台.gltf");
-  const { actions } = useAnimations(animations, group);
+  const { actions } = useAnimations(animations, group);  
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
