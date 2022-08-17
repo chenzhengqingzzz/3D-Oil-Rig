@@ -1,1309 +1,1346 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
+import { Canvas, useFrame } from '@react-three/fiber'
 
 export function OceanRIG(props) {
   const group = useRef();
   const { nodes, materials, animations } = useGLTF("/海上钻井平台.gltf");
-  const { actions } = useAnimations(animations, group);  
+  var { actions, mixer } = useAnimations(animations, group);
+  const [data, setData] = useState(null);
+
+
+
+  console.log('-->', actions);
+  // actions.clampWhenFinished = true
+
+  // useEffect( () => {
+  //   actions['ALH Dhruv Helicopter.002Action.001'].clampWhenFinished = true
+  //   actions['Empty.008Action'].clampWhenFinished = true
+  //   actions['Empty.009Action'].clampWhenFinished = true
+  //   actions['Empty.010Action'].clampWhenFinished = true
+  //   actions['Empty.011Action'].clampWhenFinished = true
+  //   console.log('sabi');
+  // },[])
+
+
+  useEffect(() => {
+
+    console.log('ihgvhghij', actions['ALH Dhruv Helicopter.002Action.001'].time);
+    // actions['ALH Dhruv Helicopter.002Action.001'].play()
+    actions['ALH Dhruv Helicopter.002Action.001'].play().paused = true
+    actions['Empty.008Action'].play()
+    actions['Empty.009Action'].play()
+    actions['Empty.010Action'].play()
+    actions['Empty.011Action'].play()
+
+    // stopAction()
+  }, [actions]);
+
+  useFrame((state, delta) => {
+    const action = actions['ALH Dhruv Helicopter.002Action.001']
+    // console.log('->',state);
+    action.time = action.time + 0.001
+  })
+
+  // const stopAction = () => {
+  //   setTimeout(() => {
+  //   actions['ALH Dhruv Helicopter.002Action.001'].stop()
+  //   actions['Empty.008Action'].stop()
+  //   actions['Empty.009Action'].stop()
+  //   actions['Empty.010Action'].stop()
+  //   actions['Empty.011Action'].stop()
+  //   },2083 )
+
+  // }
+
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
         <group
           name="ALH_Dhruv_Helicopter002"
-          position={[4.05, 0.48, -9.11]}
-          rotation={[0, 1.33, 0]}
-          scale={0.4}
+          position={[16.18, 19.74, -11.68]}
+          rotation={[0.26, 0, 0.07]}
+          scale={0.51}
         >
           <group
-            name="ALH_Dhruv_Helicopter001"
-            position={[-40.27, 10.69, 18.67]}
+            name="Empty008"
+            position={[0, 1.14, -0.46]}
+            rotation={[1.65, -Math.PI / 2, 0]}
+            scale={5.31}
           >
-            <group name="Cube016" scale={5.31} />
-            <group
-              name="Cylinder014"
-              rotation={[Math.PI, 0, Math.PI]}
-              scale={-5.31}
-            />
-            <group
-              name="Empty004"
-              position={[-0.73, 1.31, -9.26]}
-              rotation={[-Math.PI, 0.2, 3.14]}
-              scale={5.31}
-            >
-              <group name="Empty005" rotation={[-0.99, 0, -1.58]} scale={0.01}>
-                <mesh
-                  name="blade_part_int008"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade_part_int008.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, -Math.PI / 2, 0]}
-                />
-                <mesh
-                  name="blade_part_int009"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade_part_int009.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[Math.PI, 0, Math.PI]}
-                />
-                <mesh
-                  name="blade_part_int010"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade_part_int010.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, 1.57, 0]}
-                />
-                <mesh
-                  name="blade_part_int011"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade_part_int011.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                />
-                <mesh
-                  name="blade_part008"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade_part008.geometry}
-                  material={materials["rotor base.006"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, -Math.PI / 2, 0]}
-                />
-                <mesh
-                  name="blade_part009"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade_part009.geometry}
-                  material={materials["rotor base.006"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[Math.PI, 0, Math.PI]}
-                />
-                <mesh
-                  name="blade_part010"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade_part010.geometry}
-                  material={materials["rotor base.006"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, 1.57, 0]}
-                />
-                <mesh
-                  name="blade_part011"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade_part011.geometry}
-                  material={materials["rotor base.006"]}
-                  position={[0, -1.31, 0]}
-                />
-                <mesh
-                  name="blade008"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade008.geometry}
-                  material={materials.尾翼黑}
-                  position={[0, -1.31, 0]}
-                  rotation={[Math.PI, 0, Math.PI]}
-                />
-                <mesh
-                  name="blade009"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade009.geometry}
-                  material={materials.尾翼黑}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, -Math.PI / 2, 0]}
-                />
-                <mesh
-                  name="blade010"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade010.geometry}
-                  material={materials.尾翼黑}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, 1.57, 0]}
-                />
-                <mesh
-                  name="blade011"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade011.geometry}
-                  material={materials.尾翼黑}
-                  position={[0, -1.31, 0]}
-                />
-                <mesh
-                  name="bolt_outer009"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.bolt_outer009.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[-Math.PI, -1.57, 0]}
-                  scale={[0.27, 0.06, 0.27]}
-                />
-                <mesh
-                  name="bolt_outer010"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.bolt_outer010.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[-Math.PI, 0, 0]}
-                  scale={[0.27, 0.06, 0.27]}
-                />
-                <mesh
-                  name="bolt_outer015"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.bolt_outer015.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, 0, Math.PI]}
-                  scale={[0.27, 0.06, 0.27]}
-                />
-                <mesh
-                  name="bolt_outer016"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.bolt_outer016.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[Math.PI, 1.57, 0]}
-                  scale={[0.27, 0.06, 0.27]}
-                />
-                <mesh
-                  name="connector008"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.connector008.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[Math.PI / 2, -Math.PI / 2, 0]}
-                />
-                <mesh
-                  name="connector009"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.connector009.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[Math.PI, 0, Math.PI / 2]}
-                />
-                <mesh
-                  name="connector010"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.connector010.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[-Math.PI / 2, Math.PI / 2, 0]}
-                />
-                <mesh
-                  name="connector011"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.connector011.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, 0, -Math.PI / 2]}
-                />
-                <mesh
-                  name="hook003"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.hook003.geometry}
-                  material={materials["rotor base.006"]}
-                  position={[0, -1.56, 0]}
-                />
-                <mesh
-                  name="joint016"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.joint016.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  scale={-1}
-                />
-                <mesh
-                  name="joint017"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.joint017.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, -Math.PI / 2, 0]}
-                  scale={-1}
-                />
-                <mesh
-                  name="joint018"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.joint018.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[Math.PI, 0, Math.PI]}
-                  scale={-1}
-                />
-                <mesh
-                  name="joint019"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.joint019.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, 1.57, 0]}
-                  scale={-1}
-                />
-                <mesh
-                  name="joint020"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.joint020.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, -Math.PI / 2, 0]}
-                />
-                <mesh
-                  name="joint021"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.joint021.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[Math.PI, 0, Math.PI]}
-                />
-                <mesh
-                  name="joint022"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.joint022.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, 1.57, 0]}
-                />
-                <mesh
-                  name="joint023"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.joint023.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                />
-                <mesh
-                  name="main_shaft004"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.main_shaft004.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, 0, -Math.PI / 2]}
-                />
-                <mesh
-                  name="ouert_connector008"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.ouert_connector008.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, -Math.PI / 2, 0]}
-                />
-                <mesh
-                  name="ouert_connector009"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.ouert_connector009.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[Math.PI, 0, Math.PI]}
-                />
-                <mesh
-                  name="ouert_connector010"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.ouert_connector010.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, 1.57, 0]}
-                />
-                <mesh
-                  name="ouert_connector011"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.ouert_connector011.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                />
-                <mesh
-                  name="piston008"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.piston008.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, -Math.PI / 2, 0]}
-                />
-                <mesh
-                  name="piston009"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.piston009.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[Math.PI, 0, Math.PI]}
-                />
-                <mesh
-                  name="piston010"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.piston010.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, 1.57, 0]}
-                />
-                <mesh
-                  name="piston011"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.piston011.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                />
-                <mesh
-                  name="top_connector_shroud004"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.top_connector_shroud004.geometry}
-                  material={materials["rotor base.006"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[-Math.PI / 2, Math.PI / 2, 0]}
-                  scale={-1}
-                />
-                <mesh
-                  name="top_connector_shroud005"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.top_connector_shroud005.geometry}
-                  material={materials["rotor base.006"]}
-                  position={[0, -1.4, 0]}
-                  rotation={[Math.PI / 2, -Math.PI / 2, 0]}
-                />
-              </group>
-            </group>
-            <group
-              name="Empty007"
-              position={[0, 1.14, -0.46]}
-              rotation={[1.65, -Math.PI / 2, 0]}
-              scale={5.31}
-            >
-              <group name="Empty006" rotation={[-1.72, 0, 1.57]} scale={0.03}>
-                <mesh
-                  name="blade_part_int012"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade_part_int012.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, -1.57, 0]}
-                />
-                <mesh
-                  name="blade_part_int013"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade_part_int013.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[Math.PI, 0, Math.PI]}
-                />
-                <mesh
-                  name="blade_part_int014"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade_part_int014.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, 1.57, 0]}
-                />
-                <mesh
-                  name="blade_part_int015"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade_part_int015.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                />
-                <mesh
-                  name="blade_part012"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade_part012.geometry}
-                  material={materials.尾翼白}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, -1.57, 0]}
-                />
-                <mesh
-                  name="blade_part013"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade_part013.geometry}
-                  material={materials.尾翼白}
-                  position={[0, -1.31, 0]}
-                  rotation={[Math.PI, 0, Math.PI]}
-                />
-                <mesh
-                  name="blade_part014"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade_part014.geometry}
-                  material={materials.尾翼白}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, 1.57, 0]}
-                />
-                <mesh
-                  name="blade_part015"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade_part015.geometry}
-                  material={materials.尾翼白}
-                  position={[0, -1.31, 0]}
-                />
-                <mesh
-                  name="blade012"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade012.geometry}
-                  material={materials.尾翼黑}
-                  position={[0, -1.31, 0]}
-                  rotation={[Math.PI, 0, Math.PI]}
-                />
-                <mesh
-                  name="blade013"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade013.geometry}
-                  material={materials.尾翼黑}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, -1.57, 0]}
-                />
-                <mesh
-                  name="blade014"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade014.geometry}
-                  material={materials.尾翼黑}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, 1.57, 0]}
-                />
-                <mesh
-                  name="blade015"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.blade015.geometry}
-                  material={materials.尾翼黑}
-                  position={[0, -1.31, 0]}
-                />
-                <mesh
-                  name="bolt_outer011"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.bolt_outer011.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[-Math.PI, -1.57, 0]}
-                  scale={[0.27, 0.06, 0.27]}
-                />
-                <mesh
-                  name="bolt_outer012"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.bolt_outer012.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[-Math.PI, 0, 0]}
-                  scale={[0.27, 0.06, 0.27]}
-                />
-                <mesh
-                  name="bolt_outer013"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.bolt_outer013.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, 0, Math.PI]}
-                  scale={[0.27, 0.06, 0.27]}
-                />
-                <mesh
-                  name="bolt_outer014"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.bolt_outer014.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[Math.PI, 1.57, 0]}
-                  scale={[0.27, 0.06, 0.27]}
-                />
-                <mesh
-                  name="Cone001"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.Cone001.geometry}
-                  material={materials["rotor base.006"]}
-                  position={[-0.01, -1.35, 0.01]}
-                  scale={[0.98, 0.84, 0.98]}
-                />
-                <mesh
-                  name="connector012"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.connector012.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[Math.PI / 2, -Math.PI / 2, 0]}
-                />
-                <mesh
-                  name="connector013"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.connector013.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[Math.PI, 0, Math.PI / 2]}
-                />
-                <mesh
-                  name="connector014"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.connector014.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[-Math.PI / 2, Math.PI / 2, 0]}
-                />
-                <mesh
-                  name="connector015"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.connector015.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, 0, -Math.PI / 2]}
-                />
-                <mesh
-                  name="hook004"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.hook004.geometry}
-                  material={materials["rotor base.006"]}
-                  position={[0, -1.56, 0]}
-                />
-                <mesh
-                  name="joint024"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.joint024.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  scale={-1}
-                />
-                <mesh
-                  name="joint025"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.joint025.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, -Math.PI / 2, 0]}
-                  scale={-1}
-                />
-                <mesh
-                  name="joint026"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.joint026.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[Math.PI, 0, Math.PI]}
-                  scale={-1}
-                />
-                <mesh
-                  name="joint027"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.joint027.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, 1.57, 0]}
-                  scale={-1}
-                />
-                <mesh
-                  name="joint028"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.joint028.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, -1.57, 0]}
-                />
-                <mesh
-                  name="joint029"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.joint029.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[Math.PI, 0, Math.PI]}
-                />
-                <mesh
-                  name="joint030"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.joint030.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, 1.57, 0]}
-                />
-                <mesh
-                  name="joint031"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.joint031.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                />
-                <mesh
-                  name="main_shaft005"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.main_shaft005.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, 0, -Math.PI / 2]}
-                />
-                <mesh
-                  name="ouert_connector012"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.ouert_connector012.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, -1.57, 0]}
-                />
-                <mesh
-                  name="ouert_connector013"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.ouert_connector013.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[Math.PI, 0, Math.PI]}
-                />
-                <mesh
-                  name="ouert_connector014"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.ouert_connector014.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, 1.57, 0]}
-                />
-                <mesh
-                  name="ouert_connector015"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.ouert_connector015.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                />
-                <mesh
-                  name="piston012"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.piston012.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, -1.57, 0]}
-                />
-                <mesh
-                  name="piston013"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.piston013.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[Math.PI, 0, Math.PI]}
-                />
-                <mesh
-                  name="piston014"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.piston014.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                  rotation={[0, 1.57, 0]}
-                />
-                <mesh
-                  name="piston015"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.piston015.geometry}
-                  material={materials["rotor base.007"]}
-                  position={[0, -1.31, 0]}
-                />
-                <mesh
-                  name="top_connector_shroud006"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.top_connector_shroud006.geometry}
-                  material={materials.尾翼黑}
-                  position={[0, -1.31, 0]}
-                  rotation={[-Math.PI / 2, Math.PI / 2, 0]}
-                  scale={-1}
-                />
-                <mesh
-                  name="top_connector_shroud007"
-                  castShadow
-                  receiveShadow
-                  geometry={nodes.top_connector_shroud007.geometry}
-                  material={materials["rotor base.006"]}
-                  position={[0, -1.4, 0]}
-                  rotation={[Math.PI / 2, -Math.PI / 2, 0]}
-                />
-              </group>
-            </group>
-            <mesh
-              name="cover001"
-              castShadow
-              receiveShadow
-              geometry={nodes.cover001.geometry}
-              material={materials["Material.003"]}
-              position={[0.03, -1.61, 3]}
-              rotation={[Math.PI, 0, Math.PI]}
-              scale={0.51}
-            />
-            <mesh
-              name="Cube009"
-              castShadow
-              receiveShadow
-              geometry={nodes.Cube009.geometry}
-              material={materials.飞机红}
-            />
-            <mesh
-              name="Cube011"
-              castShadow
-              receiveShadow
-              geometry={nodes.Cube011.geometry}
-              material={materials["elements.009"]}
-              scale={5.31}
-            />
-            <mesh
-              name="Cube013"
-              castShadow
-              receiveShadow
-              geometry={nodes.Cube013.geometry}
-              material={materials.飞机红}
-            />
-            <mesh
-              name="Cube014"
-              castShadow
-              receiveShadow
-              geometry={nodes.Cube014.geometry}
-              material={materials.飞机红}
-            />
-            <mesh
-              name="Cube015"
-              castShadow
-              receiveShadow
-              geometry={nodes.Cube015.geometry}
-              material={materials["elements.009"]}
-            />
-            <mesh
-              name="Cube017"
-              castShadow
-              receiveShadow
-              geometry={nodes.Cube017.geometry}
-              material={materials["color helicopter.008"]}
-            />
-            <mesh
-              name="Cube018"
-              castShadow
-              receiveShadow
-              geometry={nodes.Cube018.geometry}
-              material={materials.尾翼白}
-            />
-            <mesh
-              name="Cube019"
-              castShadow
-              receiveShadow
-              geometry={nodes.Cube019.geometry}
-              material={materials["elements.009"]}
-            />
-            <mesh
-              name="Cube020"
-              castShadow
-              receiveShadow
-              geometry={nodes.Cube020.geometry}
-              material={materials["elements.008"]}
-            />
-            <group name="Cube021">
+            <group name="Empty009" rotation={[-1.72, 0, 1.57]} scale={0.03}>
               <mesh
-                name="Mesh_4"
+                name="blade_part_int016"
                 castShadow
                 receiveShadow
-                geometry={nodes.Mesh_4.geometry}
-                material={materials["elements.008"]}
+                geometry={nodes.blade_part_int016.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
               />
               <mesh
-                name="Mesh_5"
+                name="blade_part_int017"
                 castShadow
                 receiveShadow
-                geometry={nodes.Mesh_5.geometry}
-                material={materials["elements.011"]}
+                geometry={nodes.blade_part_int017.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, 1.57, 0]}
               />
               <mesh
-                name="Mesh_6"
+                name="blade_part_int018"
                 castShadow
                 receiveShadow
-                geometry={nodes.Mesh_6.geometry}
-                material={materials["elements.009"]}
+                geometry={nodes.blade_part_int018.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[Math.PI, 0, Math.PI]}
+              />
+              <mesh
+                name="blade_part_int019"
+                castShadow
+                receiveShadow
+                geometry={nodes.blade_part_int019.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, -1.57, 0]}
+              />
+              <mesh
+                name="blade_part016"
+                castShadow
+                receiveShadow
+                geometry={nodes.blade_part016.geometry}
+                material={materials["尾翼白.001"]}
+                position={[0, -1.31, 0]}
+              />
+              <mesh
+                name="blade_part017"
+                castShadow
+                receiveShadow
+                geometry={nodes.blade_part017.geometry}
+                material={materials["尾翼白.001"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, 1.57, 0]}
+              />
+              <mesh
+                name="blade_part018"
+                castShadow
+                receiveShadow
+                geometry={nodes.blade_part018.geometry}
+                material={materials["尾翼白.001"]}
+                position={[0, -1.31, 0]}
+                rotation={[Math.PI, 0, Math.PI]}
+              />
+              <mesh
+                name="blade_part019"
+                castShadow
+                receiveShadow
+                geometry={nodes.blade_part019.geometry}
+                material={materials["尾翼白.001"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, -1.57, 0]}
+              />
+              <mesh
+                name="blade016"
+                castShadow
+                receiveShadow
+                geometry={nodes.blade016.geometry}
+                material={materials["尾翼黑.001"]}
+                position={[0, -1.31, 0]}
+              />
+              <mesh
+                name="blade017"
+                castShadow
+                receiveShadow
+                geometry={nodes.blade017.geometry}
+                material={materials["尾翼黑.001"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, 1.57, 0]}
+              />
+              <mesh
+                name="blade018"
+                castShadow
+                receiveShadow
+                geometry={nodes.blade018.geometry}
+                material={materials["尾翼黑.001"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, -1.57, 0]}
+              />
+              <mesh
+                name="blade019"
+                castShadow
+                receiveShadow
+                geometry={nodes.blade019.geometry}
+                material={materials["尾翼黑.001"]}
+                position={[0, -1.31, 0]}
+                rotation={[Math.PI, 0, Math.PI]}
+              />
+              <mesh
+                name="bolt_outer019"
+                castShadow
+                receiveShadow
+                geometry={nodes.bolt_outer019.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[Math.PI, 1.57, 0]}
+                scale={[0.27, 0.06, 0.27]}
+              />
+              <mesh
+                name="bolt_outer020"
+                castShadow
+                receiveShadow
+                geometry={nodes.bolt_outer020.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, 0, Math.PI]}
+                scale={[0.27, 0.06, 0.27]}
+              />
+              <mesh
+                name="bolt_outer021"
+                castShadow
+                receiveShadow
+                geometry={nodes.bolt_outer021.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[-Math.PI, 0, 0]}
+                scale={[0.27, 0.06, 0.27]}
+              />
+              <mesh
+                name="bolt_outer022"
+                castShadow
+                receiveShadow
+                geometry={nodes.bolt_outer022.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[-Math.PI, -1.57, 0]}
+                scale={[0.27, 0.06, 0.27]}
+              />
+              <mesh
+                name="Cone002"
+                castShadow
+                receiveShadow
+                geometry={nodes.Cone002.geometry}
+                material={materials["rotor base.001"]}
+                position={[-0.01, -1.35, 0.01]}
+                scale={[0.98, 0.84, 0.98]}
+              />
+              <mesh
+                name="connector016"
+                castShadow
+                receiveShadow
+                geometry={nodes.connector016.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, 0, -Math.PI / 2]}
+              />
+              <mesh
+                name="connector017"
+                castShadow
+                receiveShadow
+                geometry={nodes.connector017.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[-Math.PI / 2, Math.PI / 2, 0]}
+              />
+              <mesh
+                name="connector018"
+                castShadow
+                receiveShadow
+                geometry={nodes.connector018.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[Math.PI, 0, Math.PI / 2]}
+              />
+              <mesh
+                name="connector019"
+                castShadow
+                receiveShadow
+                geometry={nodes.connector019.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+              />
+              <mesh
+                name="hook005"
+                castShadow
+                receiveShadow
+                geometry={nodes.hook005.geometry}
+                material={materials["rotor base.001"]}
+                position={[0, -1.56, 0]}
+              />
+              <mesh
+                name="joint032"
+                castShadow
+                receiveShadow
+                geometry={nodes.joint032.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+              />
+              <mesh
+                name="joint033"
+                castShadow
+                receiveShadow
+                geometry={nodes.joint033.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, 1.57, 0]}
+              />
+              <mesh
+                name="joint034"
+                castShadow
+                receiveShadow
+                geometry={nodes.joint034.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[Math.PI, 0, Math.PI]}
+              />
+              <mesh
+                name="joint035"
+                castShadow
+                receiveShadow
+                geometry={nodes.joint035.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, -1.57, 0]}
+              />
+              <mesh
+                name="joint036"
+                castShadow
+                receiveShadow
+                geometry={nodes.joint036.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, 1.57, 0]}
+                scale={-1}
+              />
+              <mesh
+                name="joint037"
+                castShadow
+                receiveShadow
+                geometry={nodes.joint037.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[Math.PI, 0, Math.PI]}
+                scale={-1}
+              />
+              <mesh
+                name="joint038"
+                castShadow
+                receiveShadow
+                geometry={nodes.joint038.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, -Math.PI / 2, 0]}
+                scale={-1}
+              />
+              <mesh
+                name="joint039"
+                castShadow
+                receiveShadow
+                geometry={nodes.joint039.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                scale={-1}
+              />
+              <mesh
+                name="main_shaft006"
+                castShadow
+                receiveShadow
+                geometry={nodes.main_shaft006.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, 0, -Math.PI / 2]}
+              />
+              <mesh
+                name="ouert_connector016"
+                castShadow
+                receiveShadow
+                geometry={nodes.ouert_connector016.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+              />
+              <mesh
+                name="ouert_connector017"
+                castShadow
+                receiveShadow
+                geometry={nodes.ouert_connector017.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, 1.57, 0]}
+              />
+              <mesh
+                name="ouert_connector018"
+                castShadow
+                receiveShadow
+                geometry={nodes.ouert_connector018.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[Math.PI, 0, Math.PI]}
+              />
+              <mesh
+                name="ouert_connector019"
+                castShadow
+                receiveShadow
+                geometry={nodes.ouert_connector019.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, -1.57, 0]}
+              />
+              <mesh
+                name="piston016"
+                castShadow
+                receiveShadow
+                geometry={nodes.piston016.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+              />
+              <mesh
+                name="piston017"
+                castShadow
+                receiveShadow
+                geometry={nodes.piston017.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, 1.57, 0]}
+              />
+              <mesh
+                name="piston018"
+                castShadow
+                receiveShadow
+                geometry={nodes.piston018.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[Math.PI, 0, Math.PI]}
+              />
+              <mesh
+                name="piston019"
+                castShadow
+                receiveShadow
+                geometry={nodes.piston019.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, -1.57, 0]}
+              />
+              <mesh
+                name="top_connector_shroud008"
+                castShadow
+                receiveShadow
+                geometry={nodes.top_connector_shroud008.geometry}
+                material={materials["rotor base.001"]}
+                position={[0, -1.4, 0]}
+                rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+              />
+              <mesh
+                name="top_connector_shroud009"
+                castShadow
+                receiveShadow
+                geometry={nodes.top_connector_shroud009.geometry}
+                material={materials["尾翼黑.001"]}
+                position={[0, -1.31, 0]}
+                rotation={[-Math.PI / 2, Math.PI / 2, 0]}
+                scale={-1}
               />
             </group>
-            <mesh
-              name="Cylinder010"
-              castShadow
-              receiveShadow
-              geometry={nodes.Cylinder010.geometry}
-              material={materials["elements.009"]}
-            />
-            <mesh
-              name="Cylinder011"
-              castShadow
-              receiveShadow
-              geometry={nodes.Cylinder011.geometry}
-              material={materials["elements.009"]}
-            />
-            <mesh
-              name="Cylinder012"
-              castShadow
-              receiveShadow
-              geometry={nodes.Cylinder012.geometry}
-              material={materials["elements.009"]}
-              position={[-0.01, 0.02, 0]}
-              rotation={[Math.PI, 0, Math.PI]}
-            />
-            <mesh
-              name="Cylinder013"
-              castShadow
-              receiveShadow
-              geometry={nodes.Cylinder013.geometry}
-              material={materials["color helicopter.006"]}
-              scale={5.31}
-            />
-            <mesh
-              name="Cylinder015"
-              castShadow
-              receiveShadow
-              geometry={nodes.Cylinder015.geometry}
-              material={materials.尾翼白}
-              rotation={[Math.PI, 0, Math.PI]}
-              scale={-5.31}
-            />
-            <mesh
-              name="Cylinder016"
-              castShadow
-              receiveShadow
-              geometry={nodes.Cylinder016.geometry}
-              material={materials.飞机红}
-              scale={5.31}
-            />
-            <mesh
-              name="Cylinder017"
-              castShadow
-              receiveShadow
-              geometry={nodes.Cylinder017.geometry}
-              material={materials.飞机红}
-            />
-            <mesh
-              name="Cylinder018"
-              castShadow
-              receiveShadow
-              geometry={nodes.Cylinder018.geometry}
-              material={materials.尾翼白}
-            />
-            <mesh
-              name="Cylinder019"
-              castShadow
-              receiveShadow
-              geometry={nodes.Cylinder019.geometry}
-              material={materials.尾翼白}
-            />
-            <mesh
-              name="handle001"
-              castShadow
-              receiveShadow
-              geometry={nodes.handle001.geometry}
-              material={materials.尾翼白}
-              position={[0.1, 0, 0]}
-            />
-            <mesh
-              name="heli_base004"
-              castShadow
-              receiveShadow
-              geometry={nodes.heli_base004.geometry}
-              material={materials.飞机红}
-              rotation={[Math.PI / 2, 0, 0]}
-            />
-            <mesh
-              name="heli_base005"
-              castShadow
-              receiveShadow
-              geometry={nodes.heli_base005.geometry}
-              material={materials.飞机红}
-              rotation={[Math.PI / 2, 0, 0]}
-            />
-            <mesh
-              name="heli_base006"
-              castShadow
-              receiveShadow
-              geometry={nodes.heli_base006.geometry}
-              material={materials["color helicopter.006"]}
-              rotation={[Math.PI / 2, 0, 0]}
-            />
-            <mesh
-              name="helicopter016"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter016.geometry}
-              material={materials["elements.011"]}
-              rotation={[Math.PI / 2, 0, 0]}
-              scale={5.31}
-            />
-            <mesh
-              name="helicopter017"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter017.geometry}
-              material={materials["elements.011"]}
-              rotation={[Math.PI / 2, 0, 0]}
-              scale={5.31}
-            />
-            <mesh
-              name="helicopter019"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter019.geometry}
-              material={materials["elements.011"]}
-              rotation={[Math.PI / 2, 0, 0]}
-            />
-            <mesh
-              name="helicopter025"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter025.geometry}
-              material={materials["elements.011"]}
-              rotation={[Math.PI / 2, 0, 0]}
-            />
-            <mesh
-              name="helicopter026"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter026.geometry}
-              material={materials["color helicopter.006"]}
-              rotation={[Math.PI / 2, 0, 0]}
-              scale={5.31}
-            />
-            <mesh
-              name="helicopter027"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter027.geometry}
-              material={materials.飞机红}
-              rotation={[Math.PI / 2, 0, 0]}
-            />
-            <mesh
-              name="helicopter028"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter028.geometry}
-              material={materials["rubber.002"]}
-              rotation={[Math.PI / 2, 0, 0]}
-            />
-            <mesh
-              name="helicopter029"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter029.geometry}
-              material={materials["rubber.002"]}
-              rotation={[Math.PI / 2, 0, 0]}
-              scale={5.31}
-            />
-            <mesh
-              name="helicopter031"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter031.geometry}
-              material={materials.飞机红}
-              rotation={[Math.PI / 2, 0, 0]}
-            />
-            <mesh
-              name="helicopter032"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter032.geometry}
-              material={materials.玻璃}
-              rotation={[Math.PI / 2, 0, 0]}
-            />
-            <mesh
-              name="helicopter033"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter033.geometry}
-              material={materials.玻璃}
-              rotation={[Math.PI / 2, 0, 0]}
-            />
-            <mesh
-              name="helicopter034"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter034.geometry}
-              material={materials.玻璃}
-              rotation={[Math.PI / 2, 0, 0]}
-              scale={5.31}
-            />
-            <mesh
-              name="helicopter035"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter035.geometry}
-              material={materials.飞机红}
-              rotation={[Math.PI / 2, 0, 0]}
-            />
-            <mesh
-              name="helicopter036"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter036.geometry}
-              material={materials.飞机红}
-              rotation={[Math.PI / 2, 0, 0]}
-            />
-            <mesh
-              name="helicopter037"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter037.geometry}
-              material={materials.飞机红}
-              rotation={[Math.PI / 2, 0, 0]}
-            />
-            <mesh
-              name="helicopter038"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter038.geometry}
-              material={materials.飞机红}
-              rotation={[Math.PI / 2, 0, 0]}
-            />
-            <mesh
-              name="helicopter039"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter039.geometry}
-              material={materials.玻璃}
-              rotation={[Math.PI / 2, 0, 0]}
-            />
-            <mesh
-              name="helicopter040"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter040.geometry}
-              material={materials.飞机红}
-              rotation={[Math.PI / 2, 0, 0]}
-            />
-            <mesh
-              name="helicopter041"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter041.geometry}
-              material={materials["rubber.002"]}
-              rotation={[Math.PI / 2, 0, 0]}
-              scale={5.31}
-            />
-            <mesh
-              name="helicopter042"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter042.geometry}
-              material={materials.飞机红}
-              rotation={[Math.PI / 2, 0, 0]}
-            />
-            <mesh
-              name="helicopter043"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter043.geometry}
-              material={materials.飞机红}
-              rotation={[Math.PI / 2, 0, 0]}
-            />
-            <group name="hinge001">
+          </group>
+          <group
+            name="Empty011"
+            position={[-0.73, 1.31, -9.26]}
+            rotation={[-Math.PI, 0.2, 3.14]}
+            scale={5.31}
+          >
+            <group name="Empty010" rotation={[-0.99, 0, -1.58]} scale={0.01}>
               <mesh
-                name="Cube004"
+                name="blade_part_int020"
                 castShadow
                 receiveShadow
-                geometry={nodes.Cube004.geometry}
-                material={materials["elements.010"]}
+                geometry={nodes.blade_part_int020.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
               />
               <mesh
-                name="Cube004_1"
+                name="blade_part_int021"
                 castShadow
                 receiveShadow
-                geometry={nodes.Cube004_1.geometry}
-                material={materials["elements.009"]}
+                geometry={nodes.blade_part_int021.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, 1.57, 0]}
+              />
+              <mesh
+                name="blade_part_int022"
+                castShadow
+                receiveShadow
+                geometry={nodes.blade_part_int022.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[Math.PI, 0, Math.PI]}
+              />
+              <mesh
+                name="blade_part_int023"
+                castShadow
+                receiveShadow
+                geometry={nodes.blade_part_int023.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, -1.57, 0]}
+              />
+              <mesh
+                name="blade_part020"
+                castShadow
+                receiveShadow
+                geometry={nodes.blade_part020.geometry}
+                material={materials["rotor base.001"]}
+                position={[0, -1.31, 0]}
+              />
+              <mesh
+                name="blade_part021"
+                castShadow
+                receiveShadow
+                geometry={nodes.blade_part021.geometry}
+                material={materials["rotor base.001"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, 1.57, 0]}
+              />
+              <mesh
+                name="blade_part022"
+                castShadow
+                receiveShadow
+                geometry={nodes.blade_part022.geometry}
+                material={materials["rotor base.001"]}
+                position={[0, -1.31, 0]}
+                rotation={[Math.PI, 0, Math.PI]}
+              />
+              <mesh
+                name="blade_part023"
+                castShadow
+                receiveShadow
+                geometry={nodes.blade_part023.geometry}
+                material={materials["rotor base.001"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, -1.57, 0]}
+              />
+              <mesh
+                name="blade020"
+                castShadow
+                receiveShadow
+                geometry={nodes.blade020.geometry}
+                material={materials["尾翼黑.001"]}
+                position={[0, -1.31, 0]}
+              />
+              <mesh
+                name="blade021"
+                castShadow
+                receiveShadow
+                geometry={nodes.blade021.geometry}
+                material={materials["尾翼黑.001"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, 1.57, 0]}
+              />
+              <mesh
+                name="blade022"
+                castShadow
+                receiveShadow
+                geometry={nodes.blade022.geometry}
+                material={materials["尾翼黑.001"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, -1.57, 0]}
+              />
+              <mesh
+                name="blade023"
+                castShadow
+                receiveShadow
+                geometry={nodes.blade023.geometry}
+                material={materials["尾翼黑.001"]}
+                position={[0, -1.31, 0]}
+                rotation={[Math.PI, 0, Math.PI]}
+              />
+              <mesh
+                name="bolt_outer017"
+                castShadow
+                receiveShadow
+                geometry={nodes.bolt_outer017.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[Math.PI, 1.57, 0]}
+                scale={[0.27, 0.06, 0.27]}
+              />
+              <mesh
+                name="bolt_outer018"
+                castShadow
+                receiveShadow
+                geometry={nodes.bolt_outer018.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, 0, Math.PI]}
+                scale={[0.27, 0.06, 0.27]}
+              />
+              <mesh
+                name="bolt_outer023"
+                castShadow
+                receiveShadow
+                geometry={nodes.bolt_outer023.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[-Math.PI, 0, 0]}
+                scale={[0.27, 0.06, 0.27]}
+              />
+              <mesh
+                name="bolt_outer024"
+                castShadow
+                receiveShadow
+                geometry={nodes.bolt_outer024.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[-Math.PI, -1.57, 0]}
+                scale={[0.27, 0.06, 0.27]}
+              />
+              <mesh
+                name="connector020"
+                castShadow
+                receiveShadow
+                geometry={nodes.connector020.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, 0, -Math.PI / 2]}
+              />
+              <mesh
+                name="connector021"
+                castShadow
+                receiveShadow
+                geometry={nodes.connector021.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[-Math.PI / 2, Math.PI / 2, 0]}
+              />
+              <mesh
+                name="connector022"
+                castShadow
+                receiveShadow
+                geometry={nodes.connector022.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[Math.PI, 0, Math.PI / 2]}
+              />
+              <mesh
+                name="connector023"
+                castShadow
+                receiveShadow
+                geometry={nodes.connector023.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+              />
+              <mesh
+                name="hook006"
+                castShadow
+                receiveShadow
+                geometry={nodes.hook006.geometry}
+                material={materials["rotor base.001"]}
+                position={[0, -1.56, 0]}
+              />
+              <mesh
+                name="joint040"
+                castShadow
+                receiveShadow
+                geometry={nodes.joint040.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+              />
+              <mesh
+                name="joint041"
+                castShadow
+                receiveShadow
+                geometry={nodes.joint041.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, 1.57, 0]}
+              />
+              <mesh
+                name="joint042"
+                castShadow
+                receiveShadow
+                geometry={nodes.joint042.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[Math.PI, 0, Math.PI]}
+              />
+              <mesh
+                name="joint043"
+                castShadow
+                receiveShadow
+                geometry={nodes.joint043.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, -1.57, 0]}
+              />
+              <mesh
+                name="joint044"
+                castShadow
+                receiveShadow
+                geometry={nodes.joint044.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, 1.57, 0]}
+                scale={-1}
+              />
+              <mesh
+                name="joint045"
+                castShadow
+                receiveShadow
+                geometry={nodes.joint045.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[Math.PI, 0, Math.PI]}
+                scale={-1}
+              />
+              <mesh
+                name="joint046"
+                castShadow
+                receiveShadow
+                geometry={nodes.joint046.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, -Math.PI / 2, 0]}
+                scale={-1}
+              />
+              <mesh
+                name="joint047"
+                castShadow
+                receiveShadow
+                geometry={nodes.joint047.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                scale={-1}
+              />
+              <mesh
+                name="main_shaft007"
+                castShadow
+                receiveShadow
+                geometry={nodes.main_shaft007.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, 0, -Math.PI / 2]}
+              />
+              <mesh
+                name="ouert_connector020"
+                castShadow
+                receiveShadow
+                geometry={nodes.ouert_connector020.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+              />
+              <mesh
+                name="ouert_connector021"
+                castShadow
+                receiveShadow
+                geometry={nodes.ouert_connector021.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, 1.57, 0]}
+              />
+              <mesh
+                name="ouert_connector022"
+                castShadow
+                receiveShadow
+                geometry={nodes.ouert_connector022.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[Math.PI, 0, Math.PI]}
+              />
+              <mesh
+                name="ouert_connector023"
+                castShadow
+                receiveShadow
+                geometry={nodes.ouert_connector023.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, -1.57, 0]}
+              />
+              <mesh
+                name="piston020"
+                castShadow
+                receiveShadow
+                geometry={nodes.piston020.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+              />
+              <mesh
+                name="piston021"
+                castShadow
+                receiveShadow
+                geometry={nodes.piston021.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, 1.57, 0]}
+              />
+              <mesh
+                name="piston022"
+                castShadow
+                receiveShadow
+                geometry={nodes.piston022.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[Math.PI, 0, Math.PI]}
+              />
+              <mesh
+                name="piston023"
+                castShadow
+                receiveShadow
+                geometry={nodes.piston023.geometry}
+                material={materials["rotor base.002"]}
+                position={[0, -1.31, 0]}
+                rotation={[0, -1.57, 0]}
+              />
+              <mesh
+                name="top_connector_shroud010"
+                castShadow
+                receiveShadow
+                geometry={nodes.top_connector_shroud010.geometry}
+                material={materials["rotor base.001"]}
+                position={[0, -1.4, 0]}
+                rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+              />
+              <mesh
+                name="top_connector_shroud011"
+                castShadow
+                receiveShadow
+                geometry={nodes.top_connector_shroud011.geometry}
+                material={materials["rotor base.001"]}
+                position={[0, -1.31, 0]}
+                rotation={[-Math.PI / 2, 1.57, 0]}
+                scale={-1}
               />
             </group>
+          </group>
+          <mesh
+            name="cover002"
+            castShadow
+            receiveShadow
+            geometry={nodes.cover002.geometry}
+            material={materials["Material.005"]}
+            position={[0.03, -1.61, 3]}
+            rotation={[Math.PI, 0, Math.PI]}
+            scale={0.51}
+          />
+          <group name="Cube022">
             <mesh
-              name="int002"
+              name="Mesh"
               castShadow
               receiveShadow
-              geometry={nodes.int002.geometry}
-              material={materials.尾翼黑}
-              rotation={[Math.PI / 2, 0, 0]}
+              geometry={nodes.Mesh.geometry}
+              material={materials["elements.012"]}
             />
             <mesh
-              name="main_shaft003"
+              name="Mesh_1"
               castShadow
               receiveShadow
-              geometry={nodes.main_shaft003.geometry}
-              material={materials["rotor base.008"]}
-              position={[-0.65, 1.31, -9.25]}
-              rotation={[0.79, -0.13, 0.14]}
+              geometry={nodes.Mesh_1.geometry}
+              material={materials["elements.003"]}
             />
             <mesh
-              name="mirror001"
+              name="Mesh_2"
               castShadow
               receiveShadow
-              geometry={nodes.mirror001.geometry}
-              material={materials.飞机红}
-            />
-            <mesh
-              name="pitot_tube001"
-              castShadow
-              receiveShadow
-              geometry={nodes.pitot_tube001.geometry}
-              material={materials.尾翼白}
-            />
-            <mesh
-              name="Plane009"
-              castShadow
-              receiveShadow
-              geometry={nodes.Plane009.geometry}
-              material={materials.飞机红}
-            />
-            <mesh
-              name="Plane010"
-              castShadow
-              receiveShadow
-              geometry={nodes.Plane010.geometry}
-              material={materials.飞机红}
-              scale={5.31}
-            />
-            <mesh
-              name="Plane011"
-              castShadow
-              receiveShadow
-              geometry={nodes.Plane011.geometry}
-              material={materials.飞机红}
-            />
-            <mesh
-              name="Plane012"
-              castShadow
-              receiveShadow
-              geometry={nodes.Plane012.geometry}
-              material={materials["glass.002"]}
-            />
-            <mesh
-              name="Plane013"
-              castShadow
-              receiveShadow
-              geometry={nodes.Plane013.geometry}
-              material={materials.飞机红}
-            />
-            <mesh
-              name="Plane014"
-              castShadow
-              receiveShadow
-              geometry={nodes.Plane014.geometry}
-              material={materials["elements.010"]}
-              scale={5.31}
-            />
-            <mesh
-              name="Plane015"
-              castShadow
-              receiveShadow
-              geometry={nodes.Plane015.geometry}
-              material={materials.飞机红}
-            />
-            <mesh
-              name="Plane016"
-              castShadow
-              receiveShadow
-              geometry={nodes.Plane016.geometry}
-              material={materials.尾翼白}
-            />
-            <mesh
-              name="seat002"
-              castShadow
-              receiveShadow
-              geometry={nodes.seat002.geometry}
-              material={materials["int metal.001"]}
-              position={[-0.51, -0.72, 2.3]}
-              rotation={[0, -1.57, 0]}
-              scale={[0.14, 0.15, 0.16]}
-            />
-            <mesh
-              name="seat003"
-              castShadow
-              receiveShadow
-              geometry={nodes.seat003.geometry}
-              material={materials["int metal.001"]}
-              position={[0.64, -0.72, 2.3]}
-              rotation={[0, -1.57, 0]}
-              scale={[0.14, 0.15, 0.17]}
-            />
-            <mesh
-              name="wiper001"
-              castShadow
-              receiveShadow
-              geometry={nodes.wiper001.geometry}
-              material={materials["plastic.002"]}
-              position={[0.11, -0.68, 3.41]}
-              rotation={[-1.14, 0, Math.PI / 2]}
-            />
-            <mesh
-              name="Plane017"
-              castShadow
-              receiveShadow
-              geometry={nodes.Plane017.geometry}
-              material={materials["color helicopter.fin.002"]}
-            />
-            <mesh
-              name="cockpit001"
-              castShadow
-              receiveShadow
-              geometry={nodes.cockpit001.geometry}
-              material={materials["Material.004"]}
-              position={[0.03, -1.61, 3]}
-              rotation={[Math.PI, 0, Math.PI]}
-            />
-            <mesh
-              name="helicopter030"
-              castShadow
-              receiveShadow
-              geometry={nodes.helicopter030.geometry}
-              material={materials["grill.002"]}
-              rotation={[Math.PI / 2, 0, 0]}
+              geometry={nodes.Mesh_2.geometry}
+              material={materials["elements.002"]}
             />
           </group>
+          <mesh
+            name="Cube023"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube023.geometry}
+            material={materials["elements.012"]}
+          />
+          <mesh
+            name="Cube024"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube024.geometry}
+            material={materials["elements.002"]}
+          />
+          <mesh
+            name="Cube025"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube025.geometry}
+            material={materials["尾翼白.001"]}
+          />
+          <mesh
+            name="Cube026"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube026.geometry}
+            material={materials["color helicopter.003"]}
+          />
+          <mesh
+            name="Cube027"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube027.geometry}
+            material={materials["elements.002"]}
+          />
+          <mesh
+            name="Cube028"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube028.geometry}
+            material={materials["飞机红.001"]}
+          />
+          <mesh
+            name="Cube029"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube029.geometry}
+            material={materials["飞机红.001"]}
+          />
+          <mesh
+            name="Cube030"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube030.geometry}
+            material={materials["elements.002"]}
+            scale={5.31}
+          />
+          <mesh
+            name="Cube031"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube031.geometry}
+            material={materials["飞机红.001"]}
+          />
+          <mesh
+            name="Cylinder020"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cylinder020.geometry}
+            material={materials["尾翼白.001"]}
+          />
+          <mesh
+            name="Cylinder021"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cylinder021.geometry}
+            material={materials["尾翼白.001"]}
+          />
+          <mesh
+            name="Cylinder022"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cylinder022.geometry}
+            material={materials["飞机红.001"]}
+          />
+          <mesh
+            name="Cylinder023"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cylinder023.geometry}
+            material={materials["飞机红.001"]}
+            scale={5.31}
+          />
+          <mesh
+            name="Cylinder024"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cylinder024.geometry}
+            material={materials["尾翼白.001"]}
+            rotation={[Math.PI, 0, Math.PI]}
+            scale={-5.31}
+          />
+          <mesh
+            name="Cylinder025"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cylinder025.geometry}
+            material={materials["color helicopter.001"]}
+            scale={5.31}
+          />
+          <mesh
+            name="Cylinder026"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cylinder026.geometry}
+            material={materials["elements.002"]}
+            position={[-0.01, 0.02, 0]}
+            rotation={[Math.PI, 0, Math.PI]}
+          />
+          <mesh
+            name="Cylinder027"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cylinder027.geometry}
+            material={materials["elements.002"]}
+          />
+          <mesh
+            name="Cylinder028"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cylinder028.geometry}
+            material={materials["elements.002"]}
+          />
+          <mesh
+            name="handle002"
+            castShadow
+            receiveShadow
+            geometry={nodes.handle002.geometry}
+            material={materials["尾翼白.001"]}
+            position={[0.1, 0, 0]}
+          />
+          <mesh
+            name="heli_base007"
+            castShadow
+            receiveShadow
+            geometry={nodes.heli_base007.geometry}
+            material={materials["color helicopter.001"]}
+            rotation={[Math.PI / 2, 0, 0]}
+          />
+          <mesh
+            name="heli_base008"
+            castShadow
+            receiveShadow
+            geometry={nodes.heli_base008.geometry}
+            material={materials["飞机红.001"]}
+            rotation={[Math.PI / 2, 0, 0]}
+          />
+          <mesh
+            name="heli_base009"
+            castShadow
+            receiveShadow
+            geometry={nodes.heli_base009.geometry}
+            material={materials["飞机红.001"]}
+            rotation={[Math.PI / 2, 0, 0]}
+          />
+          <mesh
+            name="helicopter044"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter044.geometry}
+            material={materials["飞机红.001"]}
+            rotation={[Math.PI / 2, 0, 0]}
+          />
+          <mesh
+            name="helicopter045"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter045.geometry}
+            material={materials["飞机红.001"]}
+            rotation={[Math.PI / 2, 0, 0]}
+          />
+          <mesh
+            name="helicopter046"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter046.geometry}
+            material={materials["rubber.003"]}
+            rotation={[Math.PI / 2, 0, 0]}
+            scale={5.31}
+          />
+          <mesh
+            name="helicopter047"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter047.geometry}
+            material={materials["飞机红.001"]}
+            rotation={[Math.PI / 2, 0, 0]}
+          />
+          <mesh
+            name="helicopter048"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter048.geometry}
+            material={materials["玻璃.001"]}
+            rotation={[Math.PI / 2, 0, 0]}
+          />
+          <mesh
+            name="helicopter049"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter049.geometry}
+            material={materials["飞机红.001"]}
+            rotation={[Math.PI / 2, 0, 0]}
+          />
+          <mesh
+            name="helicopter050"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter050.geometry}
+            material={materials["飞机红.001"]}
+            rotation={[Math.PI / 2, 0, 0]}
+          />
+          <mesh
+            name="helicopter051"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter051.geometry}
+            material={materials["飞机红.001"]}
+            rotation={[Math.PI / 2, 0, 0]}
+          />
+          <mesh
+            name="helicopter052"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter052.geometry}
+            material={materials["飞机红.001"]}
+            rotation={[Math.PI / 2, 0, 0]}
+          />
+          <mesh
+            name="helicopter053"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter053.geometry}
+            material={materials["玻璃.001"]}
+            rotation={[Math.PI / 2, 0, 0]}
+            scale={5.31}
+          />
+          <mesh
+            name="helicopter054"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter054.geometry}
+            material={materials["玻璃.001"]}
+            rotation={[Math.PI / 2, 0, 0]}
+          />
+          <mesh
+            name="helicopter055"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter055.geometry}
+            material={materials["玻璃.001"]}
+            rotation={[Math.PI / 2, 0, 0]}
+          />
+          <mesh
+            name="helicopter056"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter056.geometry}
+            material={materials["飞机红.001"]}
+            rotation={[Math.PI / 2, 0, 0]}
+          />
+          <mesh
+            name="helicopter058"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter058.geometry}
+            material={materials["rubber.003"]}
+            rotation={[Math.PI / 2, 0, 0]}
+            scale={5.31}
+          />
+          <mesh
+            name="helicopter059"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter059.geometry}
+            material={materials["rubber.003"]}
+            rotation={[Math.PI / 2, 0, 0]}
+          />
+          <mesh
+            name="helicopter060"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter060.geometry}
+            material={materials["飞机红.001"]}
+            rotation={[Math.PI / 2, 0, 0]}
+          />
+          <mesh
+            name="helicopter061"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter061.geometry}
+            material={materials["color helicopter.001"]}
+            rotation={[Math.PI / 2, 0, 0]}
+            scale={5.31}
+          />
+          <mesh
+            name="helicopter062"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter062.geometry}
+            material={materials["elements.003"]}
+            rotation={[Math.PI / 2, 0, 0]}
+          />
+          <mesh
+            name="helicopter063"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter063.geometry}
+            material={materials["elements.003"]}
+            rotation={[Math.PI / 2, 0, 0]}
+          />
+          <mesh
+            name="helicopter064"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter064.geometry}
+            material={materials["elements.003"]}
+            rotation={[Math.PI / 2, 0, 0]}
+            scale={5.31}
+          />
+          <mesh
+            name="helicopter065"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter065.geometry}
+            material={materials["elements.003"]}
+            rotation={[Math.PI / 2, 0, 0]}
+            scale={5.31}
+          />
+          <group name="hinge002">
+            <mesh
+              name="Cube036"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cube036.geometry}
+              material={materials["elements.001"]}
+            />
+            <mesh
+              name="Cube036_1"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cube036_1.geometry}
+              material={materials["elements.002"]}
+            />
+          </group>
+          <mesh
+            name="int003"
+            castShadow
+            receiveShadow
+            geometry={nodes.int003.geometry}
+            material={materials["尾翼黑.001"]}
+            rotation={[Math.PI / 2, 0, 0]}
+          />
+          <mesh
+            name="main_shaft008"
+            castShadow
+            receiveShadow
+            geometry={nodes.main_shaft008.geometry}
+            material={materials["rotor base.009"]}
+            position={[-0.65, 1.31, -9.25]}
+            rotation={[0.79, -0.13, 0.14]}
+          />
+          <mesh
+            name="mirror002"
+            castShadow
+            receiveShadow
+            geometry={nodes.mirror002.geometry}
+            material={materials["飞机红.001"]}
+          />
+          <mesh
+            name="pitot_tube002"
+            castShadow
+            receiveShadow
+            geometry={nodes.pitot_tube002.geometry}
+            material={materials["尾翼白.001"]}
+          />
+          <mesh
+            name="Plane019"
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane019.geometry}
+            material={materials["尾翼白.001"]}
+          />
+          <mesh
+            name="Plane020"
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane020.geometry}
+            material={materials["飞机红.001"]}
+          />
+          <mesh
+            name="Plane021"
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane021.geometry}
+            material={materials["elements.001"]}
+            scale={5.31}
+          />
+          <mesh
+            name="Plane022"
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane022.geometry}
+            material={materials["飞机红.001"]}
+          />
+          <mesh
+            name="Plane023"
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane023.geometry}
+            material={materials["glass.003"]}
+          />
+          <mesh
+            name="Plane024"
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane024.geometry}
+            material={materials["飞机红.001"]}
+          />
+          <mesh
+            name="Plane025"
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane025.geometry}
+            material={materials["飞机红.001"]}
+            scale={5.31}
+          />
+          <mesh
+            name="Plane026"
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane026.geometry}
+            material={materials["飞机红.001"]}
+          />
+          <mesh
+            name="seat004"
+            castShadow
+            receiveShadow
+            geometry={nodes.seat004.geometry}
+            material={materials["int metal.002"]}
+            position={[0.64, -0.72, 2.3]}
+            rotation={[0, -1.57, 0]}
+            scale={[0.14, 0.15, 0.17]}
+          />
+          <mesh
+            name="seat005"
+            castShadow
+            receiveShadow
+            geometry={nodes.seat005.geometry}
+            material={materials["int metal.002"]}
+            position={[-0.51, -0.72, 2.3]}
+            rotation={[0, -1.57, 0]}
+            scale={[0.14, 0.15, 0.16]}
+          />
+          <mesh
+            name="wiper002"
+            castShadow
+            receiveShadow
+            geometry={nodes.wiper002.geometry}
+            material={materials["plastic.003"]}
+            position={[0.11, -0.68, 3.41]}
+            rotation={[-1.14, 0, Math.PI / 2]}
+          />
+          <mesh
+            name="Plane018"
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane018.geometry}
+            material={materials["color helicopter.fin.003"]}
+          />
+          <mesh
+            name="cockpit002"
+            castShadow
+            receiveShadow
+            geometry={nodes.cockpit002.geometry}
+            material={materials["Material.006"]}
+            position={[0.03, -1.61, 3]}
+            rotation={[Math.PI, 0, Math.PI]}
+          />
+          <mesh
+            name="helicopter057"
+            castShadow
+            receiveShadow
+            geometry={nodes.helicopter057.geometry}
+            material={materials["grill.003"]}
+            rotation={[Math.PI / 2, 0, 0]}
+          />
         </group>
         <group
           name="海水"
