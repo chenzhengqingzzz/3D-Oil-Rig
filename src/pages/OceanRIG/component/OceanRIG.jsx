@@ -1,65 +1,37 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
-import { Canvas, useFrame } from '@react-three/fiber'
+import { useFrame } from "@react-three/fiber";
+
 
 export function OceanRIG(props) {
   const group = useRef();
   const { nodes, materials, animations } = useGLTF("/海上钻井平台.gltf");
-  var { actions, mixer } = useAnimations(animations, group);
-  const [data, setData] = useState(null);
-
-
-
-  console.log('-->', actions);
-  // actions.clampWhenFinished = true
-
-  // useEffect( () => {
-  //   actions['ALH Dhruv Helicopter.002Action.001'].clampWhenFinished = true
-  //   actions['Empty.008Action'].clampWhenFinished = true
-  //   actions['Empty.009Action'].clampWhenFinished = true
-  //   actions['Empty.010Action'].clampWhenFinished = true
-  //   actions['Empty.011Action'].clampWhenFinished = true
-  //   console.log('sabi');
-  // },[])
-
+  const { actions } = useAnimations(animations, group);
+  console.log('读取actions里的元素 --> ', actions);
 
   useEffect(() => {
-
-    console.log('ihgvhghij', actions['ALH Dhruv Helicopter.002Action.001'].time);
-    // actions['ALH Dhruv Helicopter.002Action.001'].play()
+    console.log('读取actions里的time属性 --> ', actions['ALH Dhruv Helicopter.002Action.001'].time);
     actions['ALH Dhruv Helicopter.002Action.001'].play().paused = true
+    actions['Empty.008Action'].play()
     actions['Empty.008Action'].play()
     actions['Empty.009Action'].play()
     actions['Empty.010Action'].play()
     actions['Empty.011Action'].play()
+  }, [actions])
 
-    // stopAction()
-  }, [actions]);
-
-  useFrame((state, delta) => {
+  useFrame(() => {
     const action = actions['ALH Dhruv Helicopter.002Action.001']
     // console.log('->',state);
-    action.time = action.time + 0.001
+    action.time = action.time + 0.005
   })
-
-  // const stopAction = () => {
-  //   setTimeout(() => {
-  //   actions['ALH Dhruv Helicopter.002Action.001'].stop()
-  //   actions['Empty.008Action'].stop()
-  //   actions['Empty.009Action'].stop()
-  //   actions['Empty.010Action'].stop()
-  //   actions['Empty.011Action'].stop()
-  //   },2083 )
-
-  // }
 
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
         <group
           name="ALH_Dhruv_Helicopter002"
-          position={[16.18, 19.74, -11.68]}
-          rotation={[0.26, 0, 0.07]}
+          position={[15.63, 56.44, -28.95]}
+          rotation={[0.16, -0.08, 0.02]}
           scale={0.51}
         >
           <group
@@ -444,7 +416,7 @@ export function OceanRIG(props) {
           <group
             name="Empty011"
             position={[-0.73, 1.31, -9.26]}
-            rotation={[-Math.PI, 0.2, 3.14]}
+            rotation={[Math.PI, 0.2, 3.14]}
             scale={5.31}
           >
             <group name="Empty010" rotation={[-0.99, 0, -1.58]} scale={0.01}>
@@ -481,7 +453,7 @@ export function OceanRIG(props) {
                 geometry={nodes.blade_part_int023.geometry}
                 material={materials["rotor base.002"]}
                 position={[0, -1.31, 0]}
-                rotation={[0, -1.57, 0]}
+                rotation={[0, -Math.PI / 2, 0]}
               />
               <mesh
                 name="blade_part020"
@@ -516,7 +488,7 @@ export function OceanRIG(props) {
                 geometry={nodes.blade_part023.geometry}
                 material={materials["rotor base.001"]}
                 position={[0, -1.31, 0]}
-                rotation={[0, -1.57, 0]}
+                rotation={[0, -Math.PI / 2, 0]}
               />
               <mesh
                 name="blade020"
@@ -542,7 +514,7 @@ export function OceanRIG(props) {
                 geometry={nodes.blade022.geometry}
                 material={materials["尾翼黑.001"]}
                 position={[0, -1.31, 0]}
-                rotation={[0, -1.57, 0]}
+                rotation={[0, -Math.PI / 2, 0]}
               />
               <mesh
                 name="blade023"
@@ -560,7 +532,7 @@ export function OceanRIG(props) {
                 geometry={nodes.bolt_outer017.geometry}
                 material={materials["rotor base.002"]}
                 position={[0, -1.31, 0]}
-                rotation={[Math.PI, 1.57, 0]}
+                rotation={[Math.PI, Math.PI / 2, 0]}
                 scale={[0.27, 0.06, 0.27]}
               />
               <mesh
@@ -627,7 +599,7 @@ export function OceanRIG(props) {
                 geometry={nodes.connector023.geometry}
                 material={materials["rotor base.002"]}
                 position={[0, -1.31, 0]}
-                rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+                rotation={[Math.PI / 2, -1.57, 0]}
               />
               <mesh
                 name="hook006"
@@ -670,7 +642,7 @@ export function OceanRIG(props) {
                 geometry={nodes.joint043.geometry}
                 material={materials["rotor base.002"]}
                 position={[0, -1.31, 0]}
-                rotation={[0, -1.57, 0]}
+                rotation={[0, -Math.PI / 2, 0]}
               />
               <mesh
                 name="joint044"
@@ -753,7 +725,7 @@ export function OceanRIG(props) {
                 geometry={nodes.ouert_connector023.geometry}
                 material={materials["rotor base.002"]}
                 position={[0, -1.31, 0]}
-                rotation={[0, -1.57, 0]}
+                rotation={[0, -Math.PI / 2, 0]}
               />
               <mesh
                 name="piston020"
@@ -788,7 +760,7 @@ export function OceanRIG(props) {
                 geometry={nodes.piston023.geometry}
                 material={materials["rotor base.002"]}
                 position={[0, -1.31, 0]}
-                rotation={[0, -1.57, 0]}
+                rotation={[0, -Math.PI / 2, 0]}
               />
               <mesh
                 name="top_connector_shroud010"
@@ -797,7 +769,7 @@ export function OceanRIG(props) {
                 geometry={nodes.top_connector_shroud010.geometry}
                 material={materials["rotor base.001"]}
                 position={[0, -1.4, 0]}
-                rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+                rotation={[Math.PI / 2, -1.57, 0]}
               />
               <mesh
                 name="top_connector_shroud011"
@@ -806,7 +778,7 @@ export function OceanRIG(props) {
                 geometry={nodes.top_connector_shroud011.geometry}
                 material={materials["rotor base.001"]}
                 position={[0, -1.31, 0]}
-                rotation={[-Math.PI / 2, 1.57, 0]}
+                rotation={[-Math.PI / 2, Math.PI / 2, 0]}
                 scale={-1}
               />
             </group>
@@ -823,24 +795,24 @@ export function OceanRIG(props) {
           />
           <group name="Cube022">
             <mesh
-              name="Mesh"
+              name="Cube037"
               castShadow
               receiveShadow
-              geometry={nodes.Mesh.geometry}
+              geometry={nodes.Cube037.geometry}
               material={materials["elements.012"]}
             />
             <mesh
-              name="Mesh_1"
+              name="Cube037_1"
               castShadow
               receiveShadow
-              geometry={nodes.Mesh_1.geometry}
+              geometry={nodes.Cube037_1.geometry}
               material={materials["elements.003"]}
             />
             <mesh
-              name="Mesh_2"
+              name="Cube037_2"
               castShadow
               receiveShadow
-              geometry={nodes.Mesh_2.geometry}
+              geometry={nodes.Cube037_2.geometry}
               material={materials["elements.002"]}
             />
           </group>
