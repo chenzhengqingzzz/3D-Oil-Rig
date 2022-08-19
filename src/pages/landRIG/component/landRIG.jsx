@@ -7,9 +7,6 @@ const getKey = (e) => keys[e]
 
 const useControl = () => {
   const [step, setStep] = useState({ w: true, s: true, a: true, d: true });
-
-
-
   useEffect(() => {
     const up = (e) => {
       setStep((s) => (
@@ -43,8 +40,11 @@ const useControl = () => {
 
 export function LandRIG(props) {
   const group = useRef();
+  // const myCube = useRef();
   const { nodes, materials, animations } = useGLTF("/陆地钻井平台.gltf");
   const { actions } = useAnimations(animations, group)
+  const myCube = group.myCube;
+  const Cube = useRef()
   const step = useControl()
   console.log('读取actions里的元素 --> ', actions);
   useEffect(() => {
@@ -59,30 +59,26 @@ export function LandRIG(props) {
     action.time = action.time + 0.02
     // group.current.position.set(step, 0, 0)
     if (!step.w) {
-      group.current.position.set(group.current.position.x - 0.2, group.current.position.y, group.current.position.z)
+      Cube.current.position.set(Cube.current.position.x - 0.2, Cube.current.position.y, Cube.current.position.z)
     }else if (!step.s){
-      group.current.position.set(group.current.position.x + 0.2, group.current.position.y, group.current.position.z)
+      Cube.current.position.set(Cube.current.position.x + 0.2, Cube.current.position.y, Cube.current.position.z)
     }
     else if(!step.a){
-      group.current.position.set(group.current.position.x , group.current.position.y, group.current.position.z + 0.2)
+      Cube.current.position.set(Cube.current.position.x , Cube.current.position.y, Cube.current.position.z + 0.2)
     }
     else if(!step.d){
-      group.current.position.set(group.current.position.x , group.current.position.y, group.current.position.z - 0.2)
+      Cube.current.position.set(Cube.current.position.x , Cube.current.position.y, Cube.current.position.z - 0.2)
     }
-    // console.log('stae',group);
-    
-    // console.log('stae',group);
 
   })
   // 只执行一次 , time 要配合.play.paused
 
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group {...props} ref={group} dispose={null}>
       <group name="Scene">
-        <mesh
+        <mesh 
           name="立方体210"
           castShadow
-
           receiveShadow
           geometry={nodes.立方体210.geometry}
           material={materials.栏杆}
@@ -91,6 +87,7 @@ export function LandRIG(props) {
           scale={[-1.2, -0.11, -0.11]}
         />
         <mesh
+          // ref={myCube}
           name="立方体208"
           castShadow
           receiveShadow
@@ -666,6 +663,7 @@ export function LandRIG(props) {
           />
         </group>
         <mesh
+          ref={Cube}
           name="myCube"
           castShadow
           receiveShadow
