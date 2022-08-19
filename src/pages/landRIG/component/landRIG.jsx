@@ -1,22 +1,68 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
+
+const keys = { w: 'w', s: 's', a: 'a', d: 'd' }
+const getKey = (e) => keys[e]
+
+const useControl = () => {
+  const [step, setStep] = useState({ w: true, s: true, a: true, d: true });
+
+
+
+  useEffect(() => {
+    const up = (e) => {
+      setStep((s) => (
+        {
+          ...s,
+          [getKey(e.key)]:true
+        }
+      ))
+    }
+    const down = (e) => {
+      setStep((s)=>(
+        {
+          ...s,
+          [getKey(e.key)]:false
+        }
+      ))
+      // console.log('down', );
+    }
+    document.addEventListener("keyup", up);
+    document.addEventListener("keydown", down);
+
+    return () => {
+      document.removeEventListener("keyup", up);
+      document.removeEventListener("keydown", down);
+    }
+
+  }, [])
+
+  return step
+}
 
 export function LandRIG(props) {
   const group = useRef();
   const { nodes, materials, animations } = useGLTF("/陆地钻井平台.gltf");
-  const { actions } = useAnimations(animations, group);
+  const { actions } = useAnimations(animations, group)
+  const step = useControl()
   console.log('读取actions里的元素 --> ', actions);
   useEffect(() => {
     actions['立方体Action'].play().paused = true
-    // actions['立方体Action'].rotation.x += 0.01;
-    // actions['立方体Action'].
-  }, [actions])
+    console.log('-----s', step);
+  }, [actions, step])
 
-  useFrame(() => {
+  useFrame((state) => {
     const action = actions['立方体Action']
+    // state.camera.zoom = a
     // console.log('->',state);
     action.time = action.time + 0.02
+    // group.current.position.set(step, 0, 0)
+    if (!step.w) {
+      group.current.position.set(group.current.position.x, group.current.position.y, group.current.position.z + 0.2)
+    }
+    // console.log('stae',group);
+
   })
   // 只执行一次 , time 要配合.play.paused
 
@@ -26,6 +72,7 @@ export function LandRIG(props) {
         <mesh
           name="立方体210"
           castShadow
+
           receiveShadow
           geometry={nodes.立方体210.geometry}
           material={materials.栏杆}
