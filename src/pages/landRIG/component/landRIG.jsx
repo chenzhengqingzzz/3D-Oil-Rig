@@ -6,8 +6,6 @@ const keys = { w: 'w', s: 's', a: 'a', d: 'd' }
 // 键值对
 const getKey = (e) => keys[e]
 // keys['a'] => keys.a
-
-
 const useControl = () => {
   const [step, setStep] = useState({ w: false, s: false, a: false, d: false });
   useEffect(() => {
@@ -27,7 +25,7 @@ const useControl = () => {
       ))
     }
     const down = (e) => {
-      setStep((s)=>(
+      setStep((s)=>(-
         {
           ...s,
           [getKey(e.key)]: true
@@ -56,7 +54,8 @@ export function LandRIG(props) {
   const { nodes, materials, animations } = useGLTF("/陆地钻井平台.gltf");
   const { actions } = useAnimations(animations, group)
   // const myCube = group.myCube;
-  const Cube = useRef()
+
+  // const Cube = useRef()
   const step = useControl()
   console.log('读取actions里的元素 --> ', actions);
   useEffect(() => {
@@ -66,21 +65,22 @@ export function LandRIG(props) {
 
   useFrame((state) => {
     const action = actions['立方体Action']
+
     // state.camera.zoom = a
     // console.log('->',state);
     // action.time = action.time + 0.02
     // group.current.position.set(step, 0, 0)
-    if (step.w) {
-      Cube.current.position.set(Cube.current.position.x, Cube.current.position.y, Cube.current.position.z - 0.2)
-    }else if (step.s){
-      Cube.current.position.set(Cube.current.position.x, Cube.current.position.y, Cube.current.position.z + 0.2)
-    }
-    else if(step.a){
-      Cube.current.position.set(Cube.current.position.x - 0.2, Cube.current.position.y, Cube.current.position.z)
-    }
-    else if(step.d){
-      Cube.current.position.set(Cube.current.position.x + 0.2 , Cube.current.position.y, Cube.current.position.z)
-    }
+    // if (step.w) {
+    //   Cube.current.position.set(Cube.current.position.x, Cube.current.position.y, Cube.current.position.z - 0.2)
+    // }else if (step.s){
+    //   Cube.current.position.set(Cube.current.position.x, Cube.current.position.y, Cube.current.position.z + 0.2)
+    // }
+    // else if(step.a){
+    //   Cube.current.position.set(Cube.current.position.x - 0.2, Cube.current.position.y, Cube.current.position.z)
+    // }
+    // else if(step.d){
+    //   Cube.current.position.set(Cube.current.position.x + 0.2 , Cube.current.position.y, Cube.current.position.z)
+    // }
 
   })
   // 只执行一次 , time 要配合.play.paused
@@ -675,7 +675,7 @@ export function LandRIG(props) {
           />
         </group>
         <mesh
-          ref={Cube}
+          // ref={Cube}
           name="myCube"
           castShadow
           receiveShadow
