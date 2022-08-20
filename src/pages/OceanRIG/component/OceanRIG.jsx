@@ -1,13 +1,51 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
+
+const keys = { w: 'w', s: 's', a: 'a', d: 'd', q: 'q', e: 'e' }
+const getKey = (e) => keys[e]
+
+const useControl = () => {
+  const [step, setStep] = useState({ w: true, s: true, a: true, d: true, q: true, e:true });
+  useEffect(() => {
+    const up = (e) => {
+      setStep((s) => (
+        {
+          ...s,
+          [getKey(e.key)]:true
+        }
+      ))
+    }
+    const down = (e) => {
+      setStep((s)=>(
+        {
+          ...s,
+          [getKey(e.key)]:false
+        }
+      ))
+      // console.log('down', );
+    }
+    document.addEventListener("keyup", up);
+    document.addEventListener("keydown", down);
+
+    return () => {
+      document.removeEventListener("keyup", up);
+      document.removeEventListener("keydown", down);
+    }
+
+  }, [])
+
+  return step
+}
 
 
 export function OceanRIG(props) {
   const group = useRef();
   const { nodes, materials, animations } = useGLTF("/海上钻井平台.gltf");
   const { actions } = useAnimations(animations, group);
-  animations.
+  const controlFlag = useRef()
+  const myCube = group.ALH_Dhruv_Helicopter002
+  const step = useControl()
   console.log('读取actions里的元素 --> ', actions);
 
   useEffect(() => {
@@ -18,18 +56,40 @@ export function OceanRIG(props) {
     actions['Empty.009Action'].play()
     actions['Empty.010Action'].play()
     actions['Empty.011Action'].play()
-  }, [actions])
+    console.log(' 键盘映射情况--> ', step);
+  }, [actions, step])
 
   useFrame(() => {
+    //指定动画物体并实现刹车
     const action = actions['ALH Dhruv Helicopter.002Action.001']
     // console.log('->',state);
     action.time = action.time + 0.005
+
+    //实现键盘控制物体
+    if (!step.w) {
+      controlFlag.current.position.set(controlFlag.current.position.x - 0.2, controlFlag.current.position.y, controlFlag.current.position.z)
+    }else if (!step.s){
+      controlFlag.current.position.set(controlFlag.current.position.x + 0.2, controlFlag.current.position.y, controlFlag.current.position.z)
+    }
+    else if(!step.a){
+      controlFlag.current.position.set(controlFlag.current.position.x , controlFlag.current.position.y, controlFlag.current.position.z + 0.2)
+    }
+    else if(!step.d){
+      controlFlag.current.position.set(controlFlag.current.position.x , controlFlag.current.position.y, controlFlag.current.position.z - 0.2)
+    }
+    else if(!step.q){
+      controlFlag.current.position.set(controlFlag.current.position.x , controlFlag.current.position.y + 0.2, controlFlag.current.position.z)
+    }
+    else if(!step.e)
+    controlFlag.current.position.set(controlFlag.current.position.x , controlFlag.current.position.y - 0.2, controlFlag.current.position.z)
+
   })
 
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
         <group
+          ref={controlFlag}
           name="ALH_Dhruv_Helicopter002"
           position={[15.63, 56.44, -28.95]}
           rotation={[0.16, -0.08, 0.02]}
