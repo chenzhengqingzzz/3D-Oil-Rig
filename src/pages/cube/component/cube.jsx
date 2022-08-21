@@ -48,7 +48,7 @@ export function Cube(props) {
   const { nodes, materials, animations } = useGLTF("/Soldier.glb");
   const { actions } = useAnimations(animations, group);
   const step = useControl()
-  console.log('读取actions里的元素啊啊啊啊啊 --> ', actions);
+  console.log('读取actions里的元素 --> ', actions);
   useEffect(() => {
     actions['Run'].play()
     console.log('-----s', step);
