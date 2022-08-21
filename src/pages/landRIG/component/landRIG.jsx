@@ -1,90 +1,12 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
-
-const keys = { w: 'w', s: 's', a: 'a', d: 'd' }
-// 键值对
-const getKey = (e) => keys[e]
-// keys['a'] => keys.a
-const useControl = () => {
-  const [step, setStep] = useState({ w: false, s: false, a: false, d: false });
-  useEffect(() => {
-    const up = (e) => {
-      // e 是监听事件
-      // key: 'a'
-      console.log(e);
-      // debugger
-      setStep((s) => (
-        {
-          ...s,
-          [getKey(e.key)]: false
-          // e.key = 'a' 
-          // keys['a'] => keys.a
-          // a: true 赋值给 step
-        }
-      ))
-    }
-    const down = (e) => {
-      setStep((s)=>(-
-        {
-          ...s,
-          [getKey(e.key)]: true
-        }
-      ))
-      // console.log('down', );
-    }
-    document.addEventListener("keyup", up);
-    // 监听事件调用了 up
-    // 作为up 的父集
-    document.addEventListener("keydown", down);
-
-    return () => {
-      document.removeEventListener("keyup", up);
-      document.removeEventListener("keydown", down);
-    }
-
-  }, [])
-
-  return step
-}
 
 export function LandRIG(props) {
   const group = useRef();
-  // const myCube = useRef();
   const { nodes, materials, animations } = useGLTF("/陆地钻井平台.gltf");
   const { actions } = useAnimations(animations, group)
-  // const myCube = group.myCube;
-
-  // const Cube = useRef()
-  const step = useControl()
+  
   console.log('读取actions里的元素 --> ', actions);
-  useEffect(() => {
-    // actions['立方体Action'].play().paused = true
-    console.log('-----s', step);
-  }, [actions, step])
-
-  useFrame((state) => {
-    const action = actions['立方体Action']
-
-    // state.camera.zoom = a
-    // console.log('->',state);
-    // action.time = action.time + 0.02
-    // group.current.position.set(step, 0, 0)
-    // if (step.w) {
-    //   Cube.current.position.set(Cube.current.position.x, Cube.current.position.y, Cube.current.position.z - 0.2)
-    // }else if (step.s){
-    //   Cube.current.position.set(Cube.current.position.x, Cube.current.position.y, Cube.current.position.z + 0.2)
-    // }
-    // else if(step.a){
-    //   Cube.current.position.set(Cube.current.position.x - 0.2, Cube.current.position.y, Cube.current.position.z)
-    // }
-    // else if(step.d){
-    //   Cube.current.position.set(Cube.current.position.x + 0.2 , Cube.current.position.y, Cube.current.position.z)
-    // }
-
-  })
-  // 只执行一次 , time 要配合.play.paused
-
   return (
     <group {...props} ref={group} dispose={null}>
       <group name="Scene">
