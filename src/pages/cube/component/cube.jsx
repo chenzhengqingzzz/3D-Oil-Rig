@@ -64,7 +64,7 @@ export function Cube(props) {
     // state.camera.updateProjectionMatrix()
     // action.time = action.time + 0.02
 
-
+    state.camera.lookAt(group.current.position.x , group.current.position.y , group.current.position.z )
     if (step.w) {
       group.current.position.set(group.current.position.x, group.current.position.y, group.current.position.z - 0.04)
       // state.camera.position.set(state.camera.position.x, state.camera.position.y, state.camera.position.z - 0.04)
